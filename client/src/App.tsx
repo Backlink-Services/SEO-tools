@@ -1,9 +1,9 @@
-import './App.css'
+import CreateProfile from "./components/CreateProfile"
 
-function App() {
+const App = () => {
   return (
     <>
-      
+      <CreateProfile />
     </>
   )
 }
