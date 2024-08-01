@@ -1,11 +1,27 @@
-import './App.css'
+import Header from "./components/Header";
+import Comment from "./pages/Comment";
+import Profiles from "./pages/Profiles";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ProfileProvider } from "./context/ProfileContext";
 
-function App() {
+const App = () => {
   return (
-    <>
-      
-    </>
-  )
-}
+    <ProfileProvider>
+      <Router>
 
-export default App
+        <div style={{ marginBottom: '' }}>
+          <Header />
+        </div>
+
+        <Routes>
+          <Route path="/profiles" element={<Profiles />} />
+          <Route path="/comment" element={<Comment />} />
+        </Routes>
+
+      </Router>
+    </ProfileProvider>
+
+  );
+};
+
+export default App;
