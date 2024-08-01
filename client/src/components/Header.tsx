@@ -1,4 +1,3 @@
-import logo from '../assets/google.png';
 import { Link } from 'react-router-dom';
 
 interface HeaderProps {

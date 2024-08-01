@@ -2,21 +2,25 @@ import Header from "./components/Header";
 import Comment from "./pages/Comment";
 import Profiles from "./pages/Profiles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ProfileProvider } from "./context/ProfileContext";
 
 const App = () => {
   return (
-    <Router>
+    <ProfileProvider>
+      <Router>
 
-      <div style={{ marginBottom: '' }}>
-        <Header />
-      </div>
+        <div style={{ marginBottom: '' }}>
+          <Header />
+        </div>
 
-      <Routes>
-        <Route path="/profiles" element={<Profiles />} />
-        <Route path="/comment" element={<Comment />} />
-      </Routes>
-      
-    </Router>
+        <Routes>
+          <Route path="/profiles" element={<Profiles />} />
+          <Route path="/comment" element={<Comment />} />
+        </Routes>
+
+      </Router>
+    </ProfileProvider>
+
   );
 };
 
