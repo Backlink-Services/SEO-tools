@@ -10,7 +10,11 @@ const Header: React.FC<HeaderProps> = ({
   return (
     // <div className="vh-100 overflow-hidden">
       // fixed-top => use margin in App.tsx
-      <nav className="navbar navbar-expand-lg border-bottom bg-white sticky-top">
+      <nav className="navbar navbar-expand-lg border-bottom bg-white sticky-top" 
+        data-bs-toggle="tooltip" 
+        data-bs-placement="top" 
+        title="Back to Home"
+      >
         <div className="container">
           <Link className="navbar-brand d-flex justify-content-center align-items-center gap-3" to="/">
             {/* <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="" /> */}
@@ -44,8 +48,11 @@ const Header: React.FC<HeaderProps> = ({
               </ul>
               {/* Login / Sign Up */}
               <div className='d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3'>
-                <a href="" className='text-black px-3 py-1'>Login</a>
-                <a href="" className='text-white text-decoration-none px-3 py-1 bg-success rounded-4'>Sign Up</a>
+                <button type="button" className="btn btn-outline-primary btn-sm">
+                  <i className="fa fa-user me-2" aria-hidden="true"></i>
+                  Login
+                </button>
+                <button type="button" className="btn btn-danger btn-sm" disabled>Sign Up</button>
               </div>
             </div>
           </div>
