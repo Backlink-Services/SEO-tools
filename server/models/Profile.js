@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const profileSchema = new mongoose.Schema({
-  title: {
+  name: {
     type: String,
   },
   email: {
@@ -10,7 +10,7 @@ const profileSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
-  website: {
+  url: {
     type: String,
   },
   comment: {
