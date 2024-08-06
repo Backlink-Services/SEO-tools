@@ -10,7 +10,6 @@ interface ProfileModalProps {
 const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit, profile }) => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState<Profile>({
-        id: profile?.id || 0,
         name: profile?.name || '',
         url: profile?.url || '',
         phone: profile?.phone || '',

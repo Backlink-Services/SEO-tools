@@ -52,6 +52,7 @@ const CommentPage: React.FC = () => {
     } catch (error: any) {
       setLoading(false)
     }
+  }
 
   return (
     <div className="container mt-5">
@@ -124,8 +125,9 @@ const CommentPage: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 value={selectedProfileId}
                 onChange={handleSelectChange}
+                required
               >
-                <option disabled>Choose a profile to post</option>
+                <option value='' disabled>Choose a profile</option>
                 {profiles?.map((profile) => (
                   <option value={profile._id} key={profile._id}>
                     {profile.name}
@@ -154,12 +156,12 @@ const CommentPage: React.FC = () => {
               rows={10}
               onChange={handleTextareaChange}
               value={textareaValue}
+              required
             ></textarea>
-            {/* <button type="submit" className="btn btn-success w-100 mb-3">START</button> */}
             {loading ? (
               <SpinnerLoading />
             ) : (
-              <button type="submit" className="btn btn-success w-100 mb-3">
+              <button type="submit" className="btn btn-success w-100 mb-3" disabled={!selectedProfileId || !textareaValue}>
                 START
               </button>
             )}

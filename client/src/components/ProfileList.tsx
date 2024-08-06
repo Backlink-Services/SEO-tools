@@ -25,7 +25,7 @@ const ProfileList = () => {
             </thead>
             <tbody>
               {profiles?.map((profile, index) => (
-                <ProfileItem key={index} profile={profile} id={index} />
+                <ProfileItem key={index} profile={profile} id={index+1} />
               ))}
             </tbody>
           </table>

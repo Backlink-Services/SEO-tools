@@ -4,7 +4,6 @@ import axios from 'axios';
 
 // DATA
 export interface Profile {
-  _id: string
   name: string
   url: string
   phone: string
@@ -50,22 +49,30 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     }
 
     fetchProfiles();
-  }, []);
+  }, [profiles?.length]);
 
-  const addProfile = (profile: Profile) => {
-    setProfiles((prevProfiles) => (prevProfiles ? [profile, ...prevProfiles] : [profile]));
+  const addProfile = async (profile: Profile) => {
+    try {
+      const response = await axios.post('http://localhost:8080/seo/profiles', profile);
+      const newProfile = response.data;
+      console.log(newProfile);
+      setProfiles((prevProfiles) => (prevProfiles ? [...prevProfiles, newProfile] : [newProfile]));
+    } catch (error) {
+      console.error('Error adding profile:', error);
+      setError('Failed to add profile');
+    }
   };
 
-  const editProfile = (updatedProfile: Profile) => {
-    setProfiles((prevProfiles) =>
-      prevProfiles ? prevProfiles.map(profile => (profile.id === updatedProfile.id ? updatedProfile : profile)) : [updatedProfile]
-    );
-  };
+  // const editProfile = (updatedProfile: Profile) => {
+  //   setProfiles((prevProfiles) =>
+  //     prevProfiles ? prevProfiles.map(profile => (profile.id === updatedProfile.id ? updatedProfile : profile)) : [updatedProfile]
+  //   );
+  // };
 
   const contextValue = {
     profiles,
     addProfile,
-    editProfile,
+    // editProfile,
     isLoading,
     error,
   }
