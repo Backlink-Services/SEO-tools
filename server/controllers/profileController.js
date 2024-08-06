@@ -1,15 +1,13 @@
-const post = require('../models/post')
+const Profile = require('../models/Profile')
 const commentServices = require('../services/commentServices')
 
-module.exports.getAllPost = async function (req, res) {
+module.exports.getAllProfile = async function (req, res) {
   try {
-    const posts = await post.find({})
+    const profiles = await Profile.find({})
+
     res.status(200).json({
       status: 'success',
-      //   result: posts.length,
-      data: {
-        posts,
-      },
+      profiles,
     })
   } catch (err) {
     console.log(err)
@@ -17,9 +15,9 @@ module.exports.getAllPost = async function (req, res) {
   }
 }
 
-module.exports.createPost = async function (req, res) {
+module.exports.createProfile = async function (req, res) {
   try {
-    const newPost = await post.create(req.body)
+    const newPost = await Profile.create(req.body)
     res.status(201).json({
       message: 'create post successfully',
       newPost: newPost,
@@ -30,10 +28,10 @@ module.exports.createPost = async function (req, res) {
   }
 }
 
-module.exports.updatePost = async function (req, res) {
+module.exports.updateProfile = async function (req, res) {
   let id = req.params.id
   try {
-    const updatedPost = await post.findByIdAndUpdate(id, req.body, {
+    const updatedPost = await Profile.findByIdAndUpdate(id, req.body, {
       new: true,
     })
     res.status(200).json({
@@ -46,10 +44,10 @@ module.exports.updatePost = async function (req, res) {
   }
 }
 
-module.exports.deletePost = async function (req, res) {
+module.exports.deleteProfile = async function (req, res) {
   let id = req.params.id
   try {
-    const deletedPost = await post.findByIdAndDelete(id)
+    const deletedPost = await Profile.findByIdAndDelete(id)
     res.status(200).json({
       message: 'delete post successfully',
       deletedPost: deletedPost,
@@ -60,6 +58,7 @@ module.exports.deletePost = async function (req, res) {
   }
 }
 
+// Comment
 module.exports.postComment = async function (req, res) {
   const { profileId, urls } = req.body
   await commentServices.postComment(profileId, urls)
