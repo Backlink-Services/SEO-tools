@@ -16,7 +16,9 @@ const CommentPage: React.FC = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const text = e.target?.result as string;
+        let text = e.target?.result as string;
+        // Remove surrounding quotation marks from each line
+        text = text.split('\n').map(line => line.trim().replace(/^"|"$/g, '')).join('\n');
         setTextareaValue(text);
       };
       reader.readAsText(file);
@@ -51,13 +53,6 @@ const CommentPage: React.FC = () => {
       setLoading(false);
     }
   };
-
-  // if (loading) {
-  //   return (
-  //     <SpinnerLoading />
-  //   )
-  // }
-
   // --------- //
 
   return (
@@ -118,11 +113,10 @@ const CommentPage: React.FC = () => {
               <select className="form-select w-50"
                 aria-label="Default select example"
                 style={{ cursor: 'pointer' }}
-                // defaultValue="Choose a profile to post"
                 value={selectedProfileId}
                 onChange={handleSelectChange}
               >
-                <option disabled>Choose a profile to post</option>
+                <option value='' disabled>Choose a profile</option>
                 {profiles?.map(profile => (
                   <option value={profile.id} key={profile.id}>
                     {profile.name}
