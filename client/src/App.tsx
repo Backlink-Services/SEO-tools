@@ -1,6 +1,6 @@
 import Header from "./components/Header";
-import Comment from "./pages/Comment";
-import Profiles from "./pages/Profiles";
+import CommentPage from "./pages/CommentPage";
+import ProfilePage from "./pages/ProfilePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ProfileProvider } from "./context/ProfileContext";
 
@@ -14,8 +14,8 @@ const App = () => {
         </div>
 
         <Routes>
-          <Route path="/profiles" element={<Profiles />} />
-          <Route path="/comment" element={<Comment />} />
+          <Route path="/profiles" element={<ProfilePage />} />
+          <Route path="/comment" element={<CommentPage />} />
         </Routes>
 
       </Router>

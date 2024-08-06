@@ -21,7 +21,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit }) => {
 
     return (
         <div>
-            <button className={`btn ${mode === 'create' ? 'btn-primary' : 'btn-success btn-sm rounded-0'}`} type="button" onClick={handleShow} data-toggle="tooltip" data-placement="top" title="Edit">
+            <button className={`btn ${mode === 'create' ? 'btn-outline-primary' : 'btn-success btn-sm rounded-0'}`} type="button" onClick={handleShow} data-toggle="tooltip" data-placement="top" title="Edit">
                 {mode === 'create' ? 'Create Profile' : <i className="fa fa-pencil-square-o"></i>}
             </button>
 
