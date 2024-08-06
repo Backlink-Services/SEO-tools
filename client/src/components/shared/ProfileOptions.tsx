@@ -1,7 +1,7 @@
 import ProfileModal from "./ProfileModal"
 
 const ProfileOptions = () => {
-    const handleEditSubmit = (data: any) => {
+    const handleEdit = (data: any) => {
         console.log('Editing Profile Data:', data);
     };
 
@@ -13,7 +13,7 @@ const ProfileOptions = () => {
         <div>
             <ul className="list-inline m-0">
                 <li className="list-inline-item">
-                    <ProfileModal mode="edit" onSubmit={handleEditSubmit}/>
+                    <ProfileModal mode="edit" onSubmit={handleEdit}/>
                 </li>
                 <li className="list-inline-item">
                     <button className="btn btn-danger btn-sm rounded-0" onClick={handleDelete} type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i className="fa fa-trash"></i></button>
