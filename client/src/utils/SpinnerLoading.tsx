@@ -1,6 +1,6 @@
 export const SpinnerLoading = () => {
     return(
-        <div className="container d-flex justify-content-center"
+        <div className="container d-flex justify-content-center mx-auto mt-4"
             data-bs-toggle="tooltip" 
             data-bs-placement="top" 
             title="Loading..."

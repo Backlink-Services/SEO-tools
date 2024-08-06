@@ -37,19 +37,14 @@ const CommentPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-
-    // const formData = {
-    //   profileId: selectedProfileId,
-    //   urls: textareaValue
-    // };
-    // console.log(formData);
+    const urlsArray = textareaValue.split('\n').filter(url => url.trim() !== '');
     try {
-      const loginURL: string = "http://localhost:8080/api/auth/login";
+      const loginURL: string = "http://localhost:8080/seo/comment";
       const response = await axios.post(loginURL, {
         profileId: selectedProfileId,
-        urls: textareaValue
+        urls: urlsArray
       });
-      console.log("res ", response);
+      console.log("urls ", response);
       setLoading(false);
     }
     catch (error: any) {
@@ -87,28 +82,28 @@ const CommentPage: React.FC = () => {
                 {/* Mock data for status table */}
                 <tr>
                   <th scope="row">1</th>
-                  <td>https://example.com</td>
+                  <td className="text-truncate" style={{ maxWidth: '150px' }}>https://vocal.media/lifehack/mindful-music</td>
                   <td>Success</td>
                 </tr>
                 <tr>
                   <th scope="row">2</th>
-                  <td>https://anotherexample.com</td>
-                  <td>Pending</td>
+                  <td className="text-truncate" style={{ maxWidth: '150px' }}>https://www.blendermarket.com/posts/contours-polystrips-combined?page=3</td>
+                  <td>Failed</td>
                 </tr>
                 <tr>
                   <th scope="row">3</th>
-                  <td>https://somethingexample.com</td>
+                  <td className="text-truncate" style={{ maxWidth: '150px' }}>http://forum.asustor.com/viewtopic.php?f=130&p=15901&t=5143</td>
                   <td>Success</td>
                 </tr>
                 <tr>
                   <th scope="row">4</th>
-                  <td>https://somethingexample.com</td>
+                  <td className="text-truncate" style={{ maxWidth: '150px' }}>https://ged.com/insession/new-employers-offering-gedworks_august2021/</td>
                   <td>Success</td>
                 </tr>
                 <tr>
                   <th scope="row">5</th>
-                  <td>https://somethingexample.com</td>
-                  <td>Success</td>
+                  <td className="text-truncate" style={{ maxWidth: '150px' }}>https://my.rosenbauer.com/en-US/forums/support-forum/79de424e-174e-ee11-a81c-6045bd9b2daa</td>
+                  <td>Pending</td>
                 </tr>
               </tbody>
             </table>

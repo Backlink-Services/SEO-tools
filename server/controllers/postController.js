@@ -46,8 +46,8 @@ module.exports.deletePost = async function(req, res){
 }
 
 module.exports.postComment = async function(req, res){
-    const { postId, urls } = req.body;
-    await commentServices.postComment(postId, urls);
+    const { profileId, urls } = req.body;
+    await commentServices.postComment(profileId, urls);
     res.status(200).json({
         message: "post comment successfully", 
     });
