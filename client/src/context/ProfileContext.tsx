@@ -4,17 +4,17 @@ import axios from 'axios';
 
 // DATA
 export interface Profile {
-  id: number;
-  name: string,
-  url: string,
-  phone: string,
-  email: string,
-  comment: string,
+  _id: string
+  name: string
+  url: string
+  phone: string
+  email: string
+  comment: string
 }
 
 // CONTEXT
 export interface ProfileContextType {
-  profiles: Profile[] | null;
+profiles: Profile[] | null;
   addProfile?: (profile: Profile) => void;
   editProfile?: (profile: Profile) => void;
   isLoading: boolean;
@@ -22,15 +22,17 @@ export interface ProfileContextType {
 }
 
 interface ProfileProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
+const ProfileContext = createContext<ProfileContextType | undefined>(undefined)
 
-export const ProfileProvider: React.FC<ProfileProviderProps> = ({ children }) => {
-  const [profiles, setProfiles] = useState<Profile[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export const ProfileProvider: React.FC<ProfileProviderProps> = ({
+  children,
+}) => {
+  const [profiles, setProfiles] = useState<Profile[] | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -40,12 +42,12 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({ children }) =>
         setProfiles(response.data.profiles);
         console.log(response.data.profiles);
       } catch (error) {
-        setError('Failed to fetch data');
-        console.error('Error fetching data:', error);
+        setError('Failed to fetch data')
+        console.error('Error fetching data:', error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
+    }
 
     fetchProfiles();
   }, []);
@@ -66,13 +68,13 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({ children }) =>
     editProfile,
     isLoading,
     error,
-  };
+  }
 
   return (
     <ProfileContext.Provider value={contextValue}>
       {children}
     </ProfileContext.Provider>
-  );
-};
+  )
+}
 
-export default ProfileContext;
+export default ProfileContext
