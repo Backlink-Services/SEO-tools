@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // DATA
 export interface Profile {
+  _id: string
   name: string
   url: string
   phone: string
@@ -16,6 +17,7 @@ export interface ProfileContextType {
 profiles: Profile[] | null;
   addProfile?: (profile: Profile) => void;
   editProfile?: (profile: Profile) => void;
+  deleteProfile?: (id: string) => void;
   isLoading: boolean;
   error: string | null;
 }
@@ -69,10 +71,21 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
   //   );
   // };
 
+  const deleteProfile = async (id: string) => {
+    try {
+      await axios.delete(`http://localhost:8080/seo/profiles/${id}`);
+      setProfiles((prevProfiles) => (prevProfiles ? prevProfiles.filter(profile => profile._id !== id) : null));
+    } catch (error) {
+      console.error('Error deleting profile:', error);
+      setError('Failed to delete profile');
+    }
+  };
+
   const contextValue = {
     profiles,
     addProfile,
     // editProfile,
+    deleteProfile,
     isLoading,
     error,
   }

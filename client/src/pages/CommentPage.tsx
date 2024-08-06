@@ -128,8 +128,8 @@ const CommentPage: React.FC = () => {
                 required
               >
                 <option value='' disabled>Choose a profile</option>
-                {profiles?.map((profile) => (
-                  <option value={profile._id} key={profile._id}>
+                {profiles?.map((profile, index) => (
+                  <option value={profile._id} key={index}>
                     {profile.name}
                   </option>
                 ))}
