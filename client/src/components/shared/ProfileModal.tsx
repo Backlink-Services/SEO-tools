@@ -1,27 +1,46 @@
 import { useState } from 'react';
+import { Profile } from '../../context/ProfileContext';
 
 interface ProfileModalProps {
     mode: 'create' | 'edit';
-    onSubmit: (data: any) => void; // Adjust the type of data as needed
+    onSubmit: (data: Profile) => void; // Adjust the type of data as needed
+    profile?: Profile;
 }
 
-const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit }) => {
+const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit, profile }) => {
     const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState<Profile>({
+        name: profile?.name || '',
+        url: profile?.url || '',
+        phone: profile?.phone || '',
+        email: profile?.email || '',
+        comment: profile?.comment || '',
+    });
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
-    const handleFormSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data = Object.fromEntries(formData.entries());
-        onSubmit(data);
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: value }));
+    };
+
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onSubmit(formData);
         handleClose();
     };
 
     return (
         <div>
-            <button className={`btn ${mode === 'create' ? 'btn-outline-primary' : 'btn-success btn-sm rounded-0'}`} type="button" onClick={handleShow} data-toggle="tooltip" data-placement="top" title="Edit">
+            <button
+                className={`btn ${mode === 'create' ? 'btn-outline-primary' : 'btn-success btn-sm rounded-0'}`}
+                type="button"
+                onClick={handleShow}
+                data-toggle="tooltip"
+                data-placement="top"
+                title={mode === 'create' ? 'Create Profile' : 'Edit Profile'}
+            >
                 {mode === 'create' ? 'Create Profile' : <i className="fa fa-pencil-square-o"></i>}
             </button>
 
@@ -38,27 +57,27 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit }) => {
                                     <div className="col-md-6 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="name" className="form-label">Name:</label>
-                                            <input type="text" className="form-control" id="name" name="name" />
+                                            <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleFormChange} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="phone" className="form-label">Phone:</label>
-                                            <input type="tel" className="form-control" id="phone" name="phone" />
+                                            <input type="tel" className="form-control" id="phone" name="phone" value={formData.phone} onChange={handleFormChange} />
                                         </div>
                                     </div>
                                     <div className="col-md-6 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="email" className="form-label">Email:</label>
-                                            <input type="email" className="form-control" id="email" name="email" />
+                                            <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleFormChange} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="url" className="form-label">URL:</label>
-                                            <input type="url" className="form-control" id="url" name="url" />
+                                            <input type="url" className="form-control" id="url" name="url" value={formData.url} onChange={handleFormChange} />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="form-group mb-3">
                                     <label htmlFor="comment" className="form-label">Comment:</label>
-                                    <textarea className="form-control" id="comment" name="comment" rows={4}></textarea>
+                                    <textarea className="form-control" id="comment" name="comment" rows={4} value={formData.comment} onChange={handleFormChange}></textarea>
                                 </div>
                                 <button type="submit" className="btn btn-primary w-100">{mode === 'create' ? 'Create Profile' : 'Save Changes'}</button>
                             </form>

@@ -1,16 +1,19 @@
+import { useContext } from "react"
+import ProfileContext, { ProfileContextType, Profile } from "../context/ProfileContext"
 import ProfileModal from "../components/shared/ProfileModal";
 import ProfileList from "../components/ProfileList";
 
 const ProfilePage: React.FC = () => {
-  const handleCreateSubmit = (data: any) => {
-    console.log('Create Profile Data:', data);
+  const { addProfile } = useContext(ProfileContext) as ProfileContextType;
+
+  const handleCreate = (data: Profile) => {
+    if (addProfile) {
+      addProfile(data);
+    }
+    // console.log('Created Profile with:', data);
   };
 
   return (
-    // <div className="w-100">
-    //   <h1>Profiles Page</h1>
-    //   <ProfileModal mode="create" onSubmit={handleCreateSubmit} />
-    // </div>
     <div className="container mt-5">
       {/* Header + Create */}
       <div className="d-flex justify-content-between">
@@ -18,7 +21,7 @@ const ProfilePage: React.FC = () => {
           <h1>Profiles</h1>
         </div>
         <div className="d-flex align-items-center">
-          <ProfileModal mode="create" onSubmit={handleCreateSubmit} />
+          <ProfileModal mode="create" onSubmit={handleCreate} />
         </div>
       </div>
 
