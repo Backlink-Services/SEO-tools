@@ -1,6 +1,9 @@
 const Profile = require('../models/Profile')
 const commentServices = require('../services/commentServices')
 
+// Get Profile
+
+// Get All Profile
 module.exports.getAllProfile = async function (req, res) {
   try {
     const profiles = await Profile.find({})
@@ -15,6 +18,7 @@ module.exports.getAllProfile = async function (req, res) {
   }
 }
 
+// Create Profile
 module.exports.createProfile = async function (req, res) {
   try {
     const newPost = await Profile.create(req.body)
@@ -28,6 +32,7 @@ module.exports.createProfile = async function (req, res) {
   }
 }
 
+// Update Profile
 module.exports.updateProfile = async function (req, res) {
   let id = req.params.id
   try {
@@ -44,6 +49,7 @@ module.exports.updateProfile = async function (req, res) {
   }
 }
 
+// Delete Profile
 module.exports.deleteProfile = async function (req, res) {
   let id = req.params.id
   try {
@@ -61,6 +67,10 @@ module.exports.deleteProfile = async function (req, res) {
 // Comment
 module.exports.postComment = async function (req, res) {
   const { profileId, urls } = req.body
+  // console.log(1)
+  // console.log(urls)
+  // console.log(profileId)
+  // console.log(3)
   await commentServices.postComment(profileId, urls)
   res.status(200).json({
     message: 'post comment successfully',
