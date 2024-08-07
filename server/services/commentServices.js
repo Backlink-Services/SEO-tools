@@ -16,9 +16,9 @@ selectors = {
     "input[type='email']",
   ],
   phone: [
-    "input[type='text'][name*='url' i]",
-    "input[name*='url' i]",
-    "input[type='text']",
+    "input[type='number'][name*='phone' i]",
+    "input[name*='phone' i]",
+    "input[type='number']",
   ],
   website: [
     "input[type='text'][name*='url' i]",
@@ -54,20 +54,41 @@ async function findElementBySelector(driver, selectors) {
   return null
 }
 
+async function check_comment_posted(driver, url, comment_text) {
+  try {
+    console.log(url)
+
+    await driver.get(url)
+
+    await driver.navigate().refresh()
+
+    console.log('Page reload success fully')
+    const page_source = await driver.executeScript(
+      'return document.documentElement.outerHTML;'
+    )
+
+    // # print("page source ", page_source)
+    // # Check if the comment text is present in the comment section
+    if (page_source.includes(comment_text)) {
+      console.log('Comment successfully posted.')
+      return true
+    } else {
+      console.log('Comment not found.')
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
 module.exports.postComment = async function (postId, urls) {
   let driver = new Builder().forBrowser(Browser.CHROME).build()
-
-  //   var dataResp
-  //   try {
-  //     console.log(postId)
-  //   } catch (error) {
-  //     // console.log(error.response)
-  //   }
 
   try {
     dataResp = await Profile.findById(postId)
     const { name, phone, email, url, comment } = dataResp
-    let result = {}
+    let result = []
 
     for (let url of urls) {
       try {
@@ -108,6 +129,7 @@ module.exports.postComment = async function (postId, urls) {
             !commentField &&
             !submitButton
           ) {
+            result.push({ [url]: 'Failed' })
             console.log('cant find anything')
             continue
           } else {
@@ -133,18 +155,20 @@ module.exports.postComment = async function (postId, urls) {
             }
           }
         } catch (err) {
-          console.log(err.message)
-          continue
+          console.log('[LOG]: ', err.message)
         }
       } catch (err) {
-        console.log(err.message)
-        continue
+        console.log('[LOG]: ', err.message)
       }
-      result[url] = 'Sucess'
+      if (await check_comment_posted(driver, url, comment)) {
+        result.push({ [url]: 'Success' })
+      } else {
+        result.push({ [url]: 'Failed' })
+      }
     }
-    console.log(result)
+    return result
   } catch (err) {
-    console.log('Unexpected error: ' + err.message)
+    console.log('Unexpected error: ' + '[LOG]: ', err.message)
   } finally {
     await driver.quit()
   }

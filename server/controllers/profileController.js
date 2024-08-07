@@ -71,8 +71,13 @@ module.exports.postComment = async function (req, res) {
   // console.log(urls)
   // console.log(profileId)
   // console.log(3)
-  await commentServices.postComment(profileId, urls)
+  const result = await commentServices.postComment(profileId, urls)
+  console.log(result)
+  // const finalResult = [...result]
   res.status(200).json({
     message: 'post comment successfully',
+    data: {
+      result,
+    },
   })
 }
