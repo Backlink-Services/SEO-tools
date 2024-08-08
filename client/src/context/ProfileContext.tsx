@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react'
 // import ProfileData from '../data/ProfileData';
-import axios from 'axios';
+import axios from 'axios'
 
 // DATA
 export interface Profile {
@@ -14,7 +14,7 @@ export interface Profile {
 
 // CONTEXT
 export interface ProfileContextType {
-  profiles: Profile[] | null;
+profiles: Profile[] | null;
   addProfile?: (profile: Profile) => void;
   editProfile?: (profile: Profile) => void;
   deleteProfile?: (id: string) => void;
@@ -37,11 +37,11 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      setIsLoading(true);
+      setIsLoading(true)
       try {
-        const response = await axios.get('http://localhost:8080/seo/profiles');
-        setProfiles(response.data.profiles);
-        console.log(response.data.profiles);
+        const response = await axios.get('http://localhost:8080/seo/profiles')
+        setProfiles(response.data.profiles)
+        console.log(response.data.profiles)
       } catch (error) {
         setError('Failed to fetch data')
         console.error('Error fetching data:', error)
@@ -63,10 +63,10 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
         return (prevProfiles ? [...prevProfiles, newProfile] : [newProfile])
       })
     } catch (error) {
-      console.error('Error adding profile:', error);
-      setError('Failed to add profile');
+      console.error('Error adding profile:', error)
+      setError('Failed to add profile')
     }
-  };
+  }
 
   const editProfile = async (profile: Profile) => {
     try {
@@ -85,15 +85,15 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
 
   const deleteProfile = async (id: string) => {
     try {
-      if (window.confirm('Are you sure you want to delete this profile?')) {
+if (window.confirm('Are you sure you want to delete this profile?')) {
         await axios.delete(`http://localhost:8080/seo/profiles/${id}`);
         setProfiles((prevProfiles) => (prevProfiles ? prevProfiles.filter(profile => profile._id !== id) : null));
       }
     } catch (error) {
-      console.error('Error deleting profile:', error);
-      setError('Failed to delete profile');
+      console.error('Error deleting profile:', error)
+      setError('Failed to delete profile')
     }
-  };
+  }
 
   const contextValue = {
     profiles,

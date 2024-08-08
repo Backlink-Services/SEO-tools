@@ -6,6 +6,8 @@ import ProfileContext, { ProfileContextType } from '../context/ProfileContext'
 const CommentPage: React.FC = () => {
   const { profiles } = useContext(ProfileContext) as ProfileContextType
   const [loading, setLoading] = useState<boolean>(false)
+  const [dataResp, setDataResp] = useState<string[]>([])
+  const [numSuccess, setNumSuccess] = useState<number>(0)
 
   // input data & send request
   const [textareaValue, setTextareaValue] = useState<string>('')
@@ -16,12 +18,15 @@ const CommentPage: React.FC = () => {
     if (file) {
       const reader = new FileReader()
       reader.onload = (e) => {
-        let text = e.target?.result as string;
+        let text = e.target?.result as string
         // Remove surrounding quotation marks from each line
-        text = text.split('\n').map(line => line.trim().replace(/^"|"$/g, '')).join('\n');
-        setTextareaValue(text);
-      };
-      reader.readAsText(file);
+        text = text
+          .split('\n')
+          .map((line) => line.trim().replace(/^"|"$/g, ''))
+          .join('\n')
+        setTextareaValue(text)
+      }
+      reader.readAsText(file)
     }
   }
 
@@ -47,7 +52,10 @@ const CommentPage: React.FC = () => {
         profileId: selectedProfileId,
         urls: urlsArray,
       })
-      console.log('urls ', response)
+      console.log(response)
+      const { result, success } = response.data.data
+      setNumSuccess(success)
+      setDataResp(result)
       setLoading(false)
     } catch (error: any) {
       setLoading(false)
@@ -64,54 +72,42 @@ const CommentPage: React.FC = () => {
             <h4>Status</h4>
           </div>
           <div className="row overflow-auto" style={{ maxHeight: '240px' }}>
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">URL</th>
-                  <th scope="col">State</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* Mock data for status table */}
-                <tr>
-                  <th scope="row">1</th>
-                  <td className="text-truncate" style={{ maxWidth: '150px' }}>
-                    https://vocal.media/lifehack/mindful-music
-                  </td>
-                  <td>Success</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td className="text-truncate" style={{ maxWidth: '150px' }}>
-                    https://www.blendermarket.com/posts/contours-polystrips-combined?page=3
-                  </td>
-                  <td>Failed</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td className="text-truncate" style={{ maxWidth: '150px' }}>
-                    http://forum.asustor.com/viewtopic.php?f=130&p=15901&t=5143
-                  </td>
-                  <td>Success</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td className="text-truncate" style={{ maxWidth: '150px' }}>
-                    https://ged.com/insession/new-employers-offering-gedworks_august2021/
-                  </td>
-                  <td>Success</td>
-                </tr>
-                <tr>
-                  <th scope="row">5</th>
-                  <td className="text-truncate" style={{ maxWidth: '150px' }}>
-                    https://my.rosenbauer.com/en-US/forums/support-forum/79de424e-174e-ee11-a81c-6045bd9b2daa
-                  </td>
-                  <td>Pending</td>
-                </tr>
-              </tbody>
-            </table>
+            {loading ? (
+              <SpinnerLoading />
+            ) : (
+              <table className="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">State</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Mock data for status table */}
+                  {dataResp.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td
+                          className="text-truncate"
+                          style={{ maxWidth: '150px' }}
+                        >
+                          {item[0]}
+                        </td>
+                        <td>{item[1]}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
+          {numSuccess > 0 && (
+            <div>
+              Success: {numSuccess}/{dataResp.length}
+            </div>
+          )}
         </div>
 
         {/* INPUT DATA */}
@@ -127,7 +123,9 @@ const CommentPage: React.FC = () => {
                 onChange={handleSelectChange}
                 required
               >
-                <option value='' disabled>Choose a profile</option>
+                <option value="" disabled>
+                  Choose a profile
+                </option>
                 {profiles?.map((profile, index) => (
                   <option value={profile._id} key={index}>
                     {profile.name}
@@ -158,13 +156,14 @@ const CommentPage: React.FC = () => {
               value={textareaValue}
               required
             ></textarea>
-            {loading ? (
-              <SpinnerLoading />
-            ) : (
-              <button type="submit" className="btn btn-success w-100 mb-3" disabled={!selectedProfileId || !textareaValue}>
-                START
-              </button>
-            )}
+
+            <button
+              type="submit"
+              className="btn btn-success w-100 mb-3"
+              disabled={loading || !selectedProfileId || !textareaValue}
+            >
+              START
+            </button>
           </form>
         </div>
       </div>
