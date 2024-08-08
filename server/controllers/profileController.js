@@ -22,10 +22,10 @@ module.exports.getAllProfile = async function (req, res) {
 module.exports.createProfile = async function (req, res) {
   console.log(req.body)
   try {
-    const newPost = await Profile.create(req.body)
+    const newProfile = await Profile.create(req.body)
     res.status(201).json({
-      message: 'create post successfully',
-      newPost: newPost,
+      message: 'create profile successfully',
+      newProfile: newProfile,
     })
   } catch (err) {
     console.log(err)
@@ -37,12 +37,12 @@ module.exports.createProfile = async function (req, res) {
 module.exports.updateProfile = async function (req, res) {
   let id = req.params.id
   try {
-    const updatedPost = await Profile.findByIdAndUpdate(id, req.body, {
+    const updatedProfile = await Profile.findByIdAndUpdate(id, req.body, {
       new: true,
     })
     res.status(200).json({
-      message: 'update post successfully',
-      updatedPost: updatedPost,
+      message: 'update profile successfully',
+      updatedProfile: updatedProfile,
     })
   } catch (err) {
     console.log(err)
@@ -54,10 +54,10 @@ module.exports.updateProfile = async function (req, res) {
 module.exports.deleteProfile = async function (req, res) {
   let id = req.params.id
   try {
-    const deletedPost = await Profile.findByIdAndDelete(id)
+    const deletedProfile = await Profile.findByIdAndDelete(id)
     res.status(200).json({
-      message: 'delete post successfully',
-      deletedPost: deletedPost,
+      message: 'delete profile successfully',
+      deletedProfile: deletedProfile,
     })
   } catch (err) {
     console.log(err)
@@ -66,13 +66,13 @@ module.exports.deleteProfile = async function (req, res) {
 }
 
 // Comment
-module.exports.postComment = async function (req, res) {
+module.exports.profileComment = async function (req, res) {
   const { profileId, urls } = req.body
   // console.log(1)
   // console.log(urls)
   // console.log(profileId)
   // console.log(3)
-  const { result, count } = await commentServices.postComment(profileId, urls)
+const { result, count } = await commentServices.postComment(profileId, urls)
   console.log(count)
   // const finalResult = [...result]
   res.status(200).json({

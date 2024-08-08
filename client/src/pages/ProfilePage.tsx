@@ -10,7 +10,7 @@ const ProfilePage: React.FC = () => {
     if (addProfile) {
       addProfile(data);
     }
-    // console.log('Created Profile with:', data);
+    console.log('Created Profile with:', data);
   };
 
   return (

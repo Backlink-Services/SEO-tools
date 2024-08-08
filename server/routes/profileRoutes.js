@@ -7,6 +7,6 @@ router.post('/profiles', profileController.createProfile)
 router.put('/profiles/:id', profileController.updateProfile)
 router.delete('/profiles/:id', profileController.deleteProfile)
 
-router.post('/comment', profileController.postComment)
+router.post('/comment', profileController.profileComment)
 
 module.exports = router

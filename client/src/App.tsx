@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import MainPage from "./pages/MainPage";
 import CommentPage from "./pages/CommentPage";
 import ProfilePage from "./pages/ProfilePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -14,6 +15,7 @@ const App = () => {
         </div>
 
         <Routes>
+          <Route path="/" element={<MainPage />} />
           <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/comment" element={<CommentPage />} />
         </Routes>

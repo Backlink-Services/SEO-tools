@@ -7,20 +7,16 @@ interface ProfileModalProps {
   profile?: Profile
 }
 
-const ProfileModal: React.FC<ProfileModalProps> = ({
-  mode,
-  onSubmit,
-  profile,
-}) => {
-  const [showModal, setShowModal] = useState(false)
-  const [formData, setFormData] = useState<Profile>({
-    // _id: profile?._id || '',
-    name: profile?.name || '',
-    url: profile?.url || '',
-    phone: profile?.phone || '',
-    email: profile?.email || '',
-    comment: profile?.comment || '',
-  })
+const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit, profile }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState<Profile>({
+        _id: profile?._id || '',
+        name: profile?.name || '',
+        url: profile?.url || '',
+        phone: profile?.phone || '',
+        email: profile?.email || '',
+        comment: profile?.comment || '',
+    });
 
   const handleShow = () => setShowModal(true)
   const handleClose = () => setShowModal(false)
@@ -32,11 +28,14 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSubmit(formData)
-    handleClose()
-  }
+const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (mode === 'create') {
+            delete formData._id;  // Ensure _id is not sent when creating a new profile
+        }
+        onSubmit(formData);
+        handleClose();
+    };
 
   return (
     <div>
