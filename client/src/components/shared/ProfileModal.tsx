@@ -10,6 +10,7 @@ interface ProfileModalProps {
 const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit, profile }) => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState<Profile>({
+        _id: profile?._id || '',
         name: profile?.name || '',
         url: profile?.url || '',
         phone: profile?.phone || '',
@@ -27,6 +28,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit, profile }) 
 
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (mode === 'create') {
+            delete formData._id;  // Ensure _id is not sent when creating a new profile
+        }
         onSubmit(formData);
         handleClose();
     };

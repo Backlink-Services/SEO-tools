@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // DATA
 export interface Profile {
-  _id: string
+  _id?: string
   name: string
   url: string
   phone: string
@@ -14,7 +14,7 @@ export interface Profile {
 
 // CONTEXT
 export interface ProfileContextType {
-profiles: Profile[] | null;
+  profiles: Profile[] | null;
   addProfile?: (profile: Profile) => void;
   editProfile?: (profile: Profile) => void;
   deleteProfile?: (id: string) => void;
@@ -51,30 +51,44 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     }
 
     fetchProfiles();
-  }, [profiles?.length]);
+  }, []);
 
   const addProfile = async (profile: Profile) => {
     try {
       const response = await axios.post('http://localhost:8080/seo/profiles', profile);
-      const newProfile = response.data;
+      const newProfile = response.data.newProfile; // .newPost cua server
       console.log(newProfile);
-      setProfiles((prevProfiles) => (prevProfiles ? [...prevProfiles, newProfile] : [newProfile]));
+      setProfiles((prevProfiles) => {
+        console.log([...prevProfiles ?? [], newProfile])
+        return (prevProfiles ? [...prevProfiles, newProfile] : [newProfile])
+      })
     } catch (error) {
       console.error('Error adding profile:', error);
       setError('Failed to add profile');
     }
   };
 
-  // const editProfile = (updatedProfile: Profile) => {
-  //   setProfiles((prevProfiles) =>
-  //     prevProfiles ? prevProfiles.map(profile => (profile.id === updatedProfile.id ? updatedProfile : profile)) : [updatedProfile]
-  //   );
-  // };
+  const editProfile = async (profile: Profile) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/seo/profiles/${profile._id}`, profile);
+      const updatedProfile = response.data.updatedProfile; // .updatedPost cua server
+      setProfiles((prevProfiles) =>
+        prevProfiles
+          ? prevProfiles.map((p) => (p._id === profile._id ? updatedProfile : p))
+          : [updatedProfile]
+      );
+    } catch (error) {
+      console.error('Error editing profile:', error);
+      setError('Failed to edit profile');
+    }
+  };
 
   const deleteProfile = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:8080/seo/profiles/${id}`);
-      setProfiles((prevProfiles) => (prevProfiles ? prevProfiles.filter(profile => profile._id !== id) : null));
+      if (window.confirm('Are you sure you want to delete this profile?')) {
+        await axios.delete(`http://localhost:8080/seo/profiles/${id}`);
+        setProfiles((prevProfiles) => (prevProfiles ? prevProfiles.filter(profile => profile._id !== id) : null));
+      }
     } catch (error) {
       console.error('Error deleting profile:', error);
       setError('Failed to delete profile');
@@ -84,7 +98,7 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
   const contextValue = {
     profiles,
     addProfile,
-    // editProfile,
+    editProfile,
     deleteProfile,
     isLoading,
     error,
