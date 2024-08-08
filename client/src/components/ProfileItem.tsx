@@ -15,7 +15,7 @@ const ProfileItem: React.FC<{ profile: Profile; id: number }> = (props) => {
         </a>
       </td>
       <td className="d-flex justify-content-end">
-        <ProfileOptions />
+        <ProfileOptions profileId={props.profile._id} />
       </td>
     </tr>
   )

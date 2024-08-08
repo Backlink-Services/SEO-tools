@@ -20,6 +20,7 @@ module.exports.getAllProfile = async function (req, res) {
 
 // Create Profile
 module.exports.createProfile = async function (req, res) {
+  console.log(req.body)
   try {
     const newPost = await Profile.create(req.body)
     res.status(201).json({
