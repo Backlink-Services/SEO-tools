@@ -51,14 +51,17 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     }
 
     fetchProfiles();
-  }, [profiles?.length]);
+  }, []);
 
   const addProfile = async (profile: Profile) => {
     try {
       const response = await axios.post('http://localhost:8080/seo/profiles', profile);
-      const newProfile = response.data;
+      const newProfile = response.data.newProfile; // .newPost cua server
       console.log(newProfile);
-      setProfiles((prevProfiles) => (prevProfiles ? [...prevProfiles, newProfile] : [newProfile]));
+      setProfiles((prevProfiles) => {
+        console.log([...prevProfiles ?? [], newProfile])
+        return (prevProfiles ? [...prevProfiles, newProfile] : [newProfile])
+      })
     } catch (error) {
       console.error('Error adding profile:', error);
       setError('Failed to add profile');
@@ -68,7 +71,7 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
   const editProfile = async (profile: Profile) => {
     try {
       const response = await axios.put(`http://localhost:8080/seo/profiles/${profile._id}`, profile);
-      const updatedProfile = response.data;
+      const updatedProfile = response.data.updatedProfile; // .updatedPost cua server
       setProfiles((prevProfiles) =>
         prevProfiles
           ? prevProfiles.map((p) => (p._id === profile._id ? updatedProfile : p))
