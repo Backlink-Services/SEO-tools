@@ -52,7 +52,7 @@ const handleFormSubmit = (e: React.FormEvent) => {
         title={mode === 'create' ? 'Create Profile' : 'Edit Profile'}
       >
         {mode === 'create' ? (
-          'Create Profile'
+          <i className="fa fa-plus" aria-hidden="true"></i>
         ) : (
           <i className="fa fa-pencil-square-o"></i>
         )}
@@ -124,12 +124,12 @@ const handleFormSubmit = (e: React.FormEvent) => {
                     </div>
                     <div className="form-group">
                       <label htmlFor="website" className="form-label">
-                        URL:
+                        Website:
                       </label>
                       <input
-                        type="url"
+                        type="text"
                         className="form-control"
-                        id="url"
+                        id="website"
                         name="website"
                         value={formData.website}
                         onChange={handleFormChange}

@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import ProfileContext, { ProfileContextType, Profile } from "../context/ProfileContext"
-import ProfileModal from "../components/shared/ProfileModal";
+import AddEditModal from "../components/shared/AddEditModal";
 import ProfileList from "../components/ProfileList";
 
 const ProfilePage: React.FC = () => {
@@ -21,7 +21,7 @@ const ProfilePage: React.FC = () => {
           <h1>Profiles</h1>
         </div>
         <div className="d-flex align-items-center">
-          <ProfileModal mode="create" onSubmit={handleCreate} />
+          <AddEditModal mode="create" onSubmit={handleCreate} />
         </div>
       </div>
 

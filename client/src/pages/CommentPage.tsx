@@ -139,8 +139,7 @@ const CommentPage: React.FC = () => {
                 data-bs-placement="top"
                 title="Only .csv files"
               >
-                <i className="fa fa-upload me-2" aria-hidden="true"></i>Upload
-                CSV
+                <i className="fa fa-upload me-2" aria-hidden="true"></i>Upload CSV
                 <input
                   type="file"
                   className="d-none"
