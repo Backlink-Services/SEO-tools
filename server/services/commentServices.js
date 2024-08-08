@@ -161,12 +161,17 @@ module.exports.postComment = async function (postId, urls) {
         console.log('[LOG]: ', err.message)
       }
       if (await check_comment_posted(driver, url, comment)) {
-        result.push({ [url]: 'Success' })
+        result.push([url, 'Success'])
       } else {
-        result.push({ [url]: 'Failed' })
+        result.push([url, 'Failed'])
       }
     }
-    return result
+    // console.log(result)
+    const count = result.filter((item) => {
+      return item[1] === 'Success'
+    }).length
+    // console.log(result, count)
+    return { result, count }
   } catch (err) {
     console.log('Unexpected error: ' + '[LOG]: ', err.message)
   } finally {
