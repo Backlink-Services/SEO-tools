@@ -1,5 +1,5 @@
 .main-page {
-    background-color: rgba(0, 0, 0, 0.5); /* Darker background */
+    user-select: none;
 }
 
 .animate__animated {
