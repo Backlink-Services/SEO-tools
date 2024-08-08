@@ -3,7 +3,7 @@ import ProfileContext, { ProfileContextType, Profile } from "../context/ProfileC
 import AddEditModal from "../components/shared/AddEditModal";
 import ProfileList from "../components/ProfileList";
 
-const ProfilePage: React.FC = () => {
+const ProfilesPage: React.FC = () => {
   const { addProfile } = useContext(ProfileContext) as ProfileContextType;
 
   const handleCreate = (data: Profile) => {
@@ -31,4 +31,4 @@ const ProfilePage: React.FC = () => {
   );
 }
 
-export default ProfilePage;
+export default ProfilesPage;

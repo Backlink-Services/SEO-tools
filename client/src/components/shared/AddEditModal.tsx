@@ -42,7 +42,7 @@ const handleFormSubmit = (e: React.FormEvent) => {
       <button
         className={`btn ${
           mode === 'create'
-            ? 'btn-outline-primary'
+            ? 'btn-warning'
             : 'btn-success btn-sm rounded-0'
         }`}
         type="button"
@@ -52,7 +52,12 @@ const handleFormSubmit = (e: React.FormEvent) => {
         title={mode === 'create' ? 'Create Profile' : 'Edit Profile'}
       >
         {mode === 'create' ? (
-          <i className="fa fa-plus" aria-hidden="true"></i>
+          <div className='d-flex align-items-center'>
+            <i className="fa fa-plus me-2" aria-hidden="true"></i>
+            Create Profile
+          </div>
+          // <i className="fa fa-plus" aria-hidden="true"></i>
+          // 'Create Profile'
         ) : (
           <i className="fa fa-pencil-square-o"></i>
         )}
