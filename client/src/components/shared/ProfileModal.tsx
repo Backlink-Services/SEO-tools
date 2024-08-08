@@ -12,7 +12,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ mode, onSubmit, profile }) 
     const [formData, setFormData] = useState<Profile>({
         _id: profile?._id || '',
         name: profile?.name || '',
-        url: profile?.url || '',
+        website: profile?.website || '',
         phone: profile?.phone || '',
         email: profile?.email || '',
         comment: profile?.comment || '',
@@ -123,15 +123,15 @@ const handleFormSubmit = (e: React.FormEvent) => {
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="url" className="form-label">
+                      <label htmlFor="website" className="form-label">
                         URL:
                       </label>
                       <input
                         type="url"
                         className="form-control"
                         id="url"
-                        name="url"
-                        value={formData.url}
+                        name="website"
+                        value={formData.website}
                         onChange={handleFormChange}
                       />
                     </div>

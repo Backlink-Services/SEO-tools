@@ -10,8 +10,8 @@ const ProfileItem: React.FC<{ profile: Profile; id: number }> = (props) => {
         {props.profile.name}
       </td>
       <td className="text-truncate" style={{ maxWidth: '200px' }}>
-        <a href={props.profile.url} target="_blank" rel="noopener noreferrer">
-          {props.profile.url}
+        <a href={props.profile.website} target="_blank" rel="noopener noreferrer">
+          {props.profile.website}
         </a>
       </td>
       <td className="d-flex justify-content-end">

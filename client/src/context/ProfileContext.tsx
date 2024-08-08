@@ -6,7 +6,7 @@ import axios from 'axios'
 export interface Profile {
   _id?: string
   name: string
-  url: string
+  website: string
   phone: string
   email: string
   comment: string
@@ -71,6 +71,7 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
   const editProfile = async (profile: Profile) => {
     try {
       const response = await axios.put(`http://localhost:8080/seo/profiles/${profile._id}`, profile);
+      console.log(profile)
       const updatedProfile = response.data.updatedProfile; // .updatedPost cua server
       setProfiles((prevProfiles) =>
         prevProfiles

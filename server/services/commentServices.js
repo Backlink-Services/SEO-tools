@@ -69,8 +69,9 @@ async function check_comment_posted(driver, url, comment_text) {
 
     // # print("page source ", page_source)
     // # Check if the comment text is present in the comment section
+    // console.log("page source " + page_source);
     if (page_source.includes(comment_text)) {
-      console.log('Comment successfully posted.')
+      console.log('Comment successfully posted ' + comment_text)
       return true
     } else {
       console.log('Comment not found.')
@@ -87,7 +88,7 @@ module.exports.postComment = async function (postId, urls) {
 
   try {
     dataResp = await Profile.findById(postId)
-    const { name, phone, email, url, comment } = dataResp
+    const { name, phone, email, website, comment } = dataResp
     let result = []
 
     for (let url of urls) {
@@ -143,7 +144,7 @@ module.exports.postComment = async function (postId, urls) {
               await phoneField.sendKeys(phone)
             }
             if (websiteField) {
-              await websiteField.sendKeys(url)
+              await websiteField.sendKeys(website)
             }
             if (commentField) {
               await commentField.sendKeys(comment)

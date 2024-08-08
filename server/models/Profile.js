@@ -10,7 +10,7 @@ const profileSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
-  url: {
+  website: {
     type: String,
   },
   comment: {
