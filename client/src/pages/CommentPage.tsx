@@ -85,7 +85,7 @@ const CommentPage: React.FC = () => {
 
   const containerStyle = {
     opacity: fadeIn ? 1 : 0,
-    transition: 'opacity 0.3s linear',
+    transition: 'opacity 0.5s ease-in-out',
   };
   // -------------------------------------------- //
 
@@ -95,7 +95,7 @@ const CommentPage: React.FC = () => {
       <div className="row">
         {/* COMMENT STATUS */}
         <div className="col-md-6 d-flex flex-column">
-          <h4>Status</h4>
+          <h4>STATUS</h4>
           <div className="row overflow-auto" style={{ maxHeight: '240px' }}>
             {loading ? (
               <SpinnerLoading />
@@ -137,12 +137,37 @@ const CommentPage: React.FC = () => {
 
         {/* INPUT DATA */}
         <div className="col-md-6">
-          <h4>URLS</h4>
-          <div className="d-flex justify-content-between w-50 mb-3">
+          <h4>URLs</h4>
+          <div className="d-none d-lg-flex gap-3 mb-3">
             <AddEditModal mode="create" onSubmit={handleCreate} />
             <ShowProfilesModal />
           </div>
-          <form onSubmit={handleSubmit}>
+          <div className="d-lg-none mb-3">
+            <div className="row mb-3">
+              <AddEditModal mode="create" onSubmit={handleCreate} />
+            </div>
+            <div className="row">
+              <ShowProfilesModal />
+            </div>
+          </div>
+
+          <form className='form-floating' onSubmit={handleSubmit}>
+
+            <textarea
+              className="form-control mb-3"
+              placeholder="" // for the bootstrap floating label effect, can leave blank
+              id="floatingTextarea"
+              // rows={10} // because textarea with floating label can not use rows attribute
+              style={{ height: '150px' }}
+              onChange={handleTextareaChange}
+              value={textareaValue}
+              required
+            ></textarea>
+            <label
+              className='text-black-50'
+              htmlFor="floatingTextarea"
+            >Upload .csv file or input URLs manually</label>
+
             <div className="d-flex justify-content-between align-items-center mb-3">
               <select
                 className="form-select w-50"
@@ -163,7 +188,7 @@ const CommentPage: React.FC = () => {
               </select>
 
               <label
-                className="btn btn-outline-primary"
+                className="btn btn-outline-primary text-nowrap"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
                 title="Only .csv files"
@@ -176,14 +201,8 @@ const CommentPage: React.FC = () => {
                   onChange={handleCSVUpload}
                 />
               </label>
+
             </div>
-            <textarea
-              className="form-control mb-3"
-              rows={10}
-              onChange={handleTextareaChange}
-              value={textareaValue}
-              required
-            ></textarea>
 
             <button
               type="submit"
