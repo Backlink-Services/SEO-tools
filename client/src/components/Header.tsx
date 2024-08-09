@@ -35,16 +35,18 @@ const Header: React.FC<HeaderProps> = ({
 
             <div className="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
               <ul className="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+                {/* Comment Page */}
                 <li className="nav-item mx-2">
                   <Link className="nav-link" aria-current="page" to="/comment">
                     Comment
                   </Link>
                 </li>
-                <li className="nav-item mx-2">
+                {/* Profiles Page */}
+                {/* <li className="nav-item mx-2">
                   <Link className="nav-link" to="/profiles">
                     Profiles
                   </Link>
-                </li>
+                </li> */}
               </ul>
               {/* Login / Sign Up */}
               <div className='d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3'>

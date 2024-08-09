@@ -1,13 +1,22 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import SpinnerLoading from '../utils/SpinnerLoading'
 import axios from 'axios'
-import ProfileContext, { ProfileContextType } from '../context/ProfileContext'
+import ProfileContext, { ProfileContextType, Profile } from '../context/ProfileContext'
+import AddEditModal from "../components/shared/AddEditModal";
+import ShowProfilesModal from '../components/ShowProfilesModal';
 
 const CommentPage: React.FC = () => {
-  const { profiles } = useContext(ProfileContext) as ProfileContextType
+  const { profiles, addProfile } = useContext(ProfileContext) as ProfileContextType
   const [loading, setLoading] = useState<boolean>(false)
   const [dataResp, setDataResp] = useState<string[]>([])
   const [numSuccess, setNumSuccess] = useState<number>(0)
+
+  const handleCreate = (data: Profile) => {
+    if (addProfile) {
+      addProfile(data);
+    }
+    console.log('Created Profile with:', data);
+  };
 
   // input data & send request
   const [textareaValue, setTextareaValue] = useState<string>('')
@@ -61,16 +70,32 @@ const CommentPage: React.FC = () => {
       setLoading(false)
     }
   }
+  // -------------------------------------------- //
+
+  // Page fade in at render
+  const [fadeIn, setFadeIn] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFadeIn(true);
+    }, 0); // Adjust the delay as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const containerStyle = {
+    opacity: fadeIn ? 1 : 0,
+    transition: 'opacity 0.3s linear',
+  };
+  // -------------------------------------------- //
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={containerStyle}>
       <h1 className="mb-4">Auto Comment</h1>
       <div className="row">
         {/* COMMENT STATUS */}
         <div className="col-md-6 d-flex flex-column">
-          <div className="row">
-            <h4>Status</h4>
-          </div>
+          <h4>Status</h4>
           <div className="row overflow-auto" style={{ maxHeight: '240px' }}>
             {loading ? (
               <SpinnerLoading />
@@ -112,8 +137,12 @@ const CommentPage: React.FC = () => {
 
         {/* INPUT DATA */}
         <div className="col-md-6">
+          <h4>URLS</h4>
+          <div className="d-flex justify-content-between w-50 mb-3">
+            <AddEditModal mode="create" onSubmit={handleCreate} />
+            <ShowProfilesModal />
+          </div>
           <form onSubmit={handleSubmit}>
-            <h4>URLS</h4>
             <div className="d-flex justify-content-between align-items-center mb-3">
               <select
                 className="form-select w-50"
@@ -139,8 +168,7 @@ const CommentPage: React.FC = () => {
                 data-bs-placement="top"
                 title="Only .csv files"
               >
-                <i className="fa fa-upload me-2" aria-hidden="true"></i>Upload
-                CSV
+                <i className="fa fa-upload me-2" aria-hidden="true"></i>Upload CSV
                 <input
                   type="file"
                   className="d-none"

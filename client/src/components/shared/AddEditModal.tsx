@@ -42,7 +42,7 @@ const handleFormSubmit = (e: React.FormEvent) => {
       <button
         className={`btn ${
           mode === 'create'
-            ? 'btn-outline-primary'
+            ? 'btn-warning'
             : 'btn-success btn-sm rounded-0'
         }`}
         type="button"
@@ -52,7 +52,12 @@ const handleFormSubmit = (e: React.FormEvent) => {
         title={mode === 'create' ? 'Create Profile' : 'Edit Profile'}
       >
         {mode === 'create' ? (
-          'Create Profile'
+          <div className='d-flex align-items-center'>
+            <i className="fa fa-plus me-2" aria-hidden="true"></i>
+            Create Profile
+          </div>
+          // <i className="fa fa-plus" aria-hidden="true"></i>
+          // 'Create Profile'
         ) : (
           <i className="fa fa-pencil-square-o"></i>
         )}
@@ -124,12 +129,12 @@ const handleFormSubmit = (e: React.FormEvent) => {
                     </div>
                     <div className="form-group">
                       <label htmlFor="website" className="form-label">
-                        URL:
+                        Website:
                       </label>
                       <input
-                        type="url"
+                        type="text"
                         className="form-control"
-                        id="url"
+                        id="website"
                         name="website"
                         value={formData.website}
                         onChange={handleFormChange}
