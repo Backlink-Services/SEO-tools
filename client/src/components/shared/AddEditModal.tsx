@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Profile } from '../../context/ProfileContext'
+import { FaUserPlus } from "react-icons/fa";
 
 interface ProfileModalProps {
   mode: 'create' | 'edit'
@@ -42,7 +43,7 @@ const handleFormSubmit = (e: React.FormEvent) => {
       <button
         className={`btn ${
           mode === 'create'
-            ? 'btn-warning'
+            ? 'btn-warning w-100 d-flex justify-content-center btn-sm'
             : 'btn-success btn-sm rounded-0'
         }`}
         type="button"
@@ -52,9 +53,8 @@ const handleFormSubmit = (e: React.FormEvent) => {
         title={mode === 'create' ? 'Create Profile' : 'Edit Profile'}
       >
         {mode === 'create' ? (
-          <div className='d-flex align-items-center'>
-            <i className="fa fa-plus me-2" aria-hidden="true"></i>
-            Create Profile
+          <div className='d-flex align-items-center text-nowrap'>
+            <FaUserPlus className='ms-1 me-2' size={18} />Create Profile
           </div>
           // <i className="fa fa-plus" aria-hidden="true"></i>
           // 'Create Profile'
@@ -64,7 +64,7 @@ const handleFormSubmit = (e: React.FormEvent) => {
       </button>
 
       <div
-        className={`modal fade ${showModal ? 'show' : ''}`}
+        className={`modal top ${showModal ? 'show' : ''}`}
         tabIndex={-1}
         style={{ display: showModal ? 'block' : 'none' }}
         aria-labelledby="exampleModalLabel"

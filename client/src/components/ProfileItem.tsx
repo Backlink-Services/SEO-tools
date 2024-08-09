@@ -6,7 +6,7 @@ const ProfileItem: React.FC<{ profile: Profile; id: number }> = (props) => {
   return (
     <tr key={props.id}>
       <th scope="row">{props.id}</th>
-      <td className="text-truncate" style={{ maxWidth: '150px' }}>
+      <td className="text-truncate" style={{ maxWidth: '40px' }}>
         {props.profile.name}
       </td>
       <td className="text-truncate" style={{ maxWidth: '200px' }}>
@@ -14,8 +14,10 @@ const ProfileItem: React.FC<{ profile: Profile; id: number }> = (props) => {
           {props.profile.website}
         </a>
       </td>
-      <td className="d-flex justify-content-end">
-        <ProfileOptions profile={props.profile} />
+      <td className="">
+        <div className="d-flex justify-content-end">
+          <ProfileOptions profile={props.profile} />
+        </div>
       </td>
     </tr>
   )
