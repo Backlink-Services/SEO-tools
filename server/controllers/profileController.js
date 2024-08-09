@@ -72,7 +72,7 @@ module.exports.profileComment = async function (req, res) {
   // console.log(urls)
   // console.log(profileId)
   // console.log(3)
-const { result, count } = await commentServices.postComment(profileId, urls)
+  const { result, count } = await commentServices.postComment(profileId, urls)
   console.log(count)
   // const finalResult = [...result]
   res.status(200).json({

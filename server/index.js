@@ -4,14 +4,21 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
+const profileRoutes = require('./routes/profileRoutes')
+const userRoutes = require('./routes/userRoutes')
+
 const app = express()
+app.use(cookieParser())
 
 const corsOptions = {
   origin: 'http://localhost:5173',
   credentials: true, // Allow credentials (cookies)
 }
 
-const profileRoutes = require('./routes/profileRoutes')
+app.use((req, res, next) => {
+  console.log(req.cookies)
+  next()
+})
 
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: true }))
@@ -31,6 +38,7 @@ app.listen(process.env.PORT, () => {
 })
 
 app.use('/seo', profileRoutes)
+app.use('/users', userRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
